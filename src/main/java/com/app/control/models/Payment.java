@@ -1,6 +1,7 @@
 package com.app.control.models;
 
 import java.sql.Timestamp;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.Column;
@@ -17,46 +18,50 @@ import org.springframework.data.annotation.LastModifiedDate;
 @Entity
 @Table(name = "payments")
 public class Payment {
-    
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
-    private String name;
-    @Column(columnDefinition = "tinyint(1) default 1" )
-    private boolean actived;
-    @OneToMany(mappedBy = "payment")
-    private Set<Order> orders;
 
-    @CreatedDate
-    @Column(name = "created_at", updatable = false, nullable = false)
-    private Timestamp createdAt;
-    @LastModifiedDate
-    @Column(name = "updated_at", nullable = false)
-    private Timestamp updatedAt;
+	@Id
 
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private long id;
 
-    public long getId() {
-        return this.id;
-    }
+	@Column(nullable = false)
+	private String name;
 
-    public void setId(long id) {
-        this.id = id;
-    }
+	@Column(columnDefinition = "tinyint(1) default 1")
+	private boolean actived;
 
-    public String getName() {
-        return this.name;
-    }
+	@OneToMany(mappedBy = "payment")
+	private List<Order> orders;
 
-    public void setName(String name) {
-        this.name = name;
-    }
+	@LastModifiedDate
+	@Column(name = "created_at", columnDefinition = "timestamp")
+	private Timestamp createdAt;
+	@CreatedDate
+	@Column(name = "updated_at", columnDefinition = "timestamp default CURRENT_TIMESTAMP")
+	private Timestamp updatedAt;
 
-    public boolean isActived() {
-        return this.actived;
-    }
+	public long getId() {
+		return this.id;
+	}
 
-    public void setActived(boolean actived) {
-        this.actived = actived;
-    }
+	public void setId(long id) {
+		this.id = id;
+	}
+
+	public String getName() {
+		return this.name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public boolean isActived() {
+		return this.actived;
+	}
+
+	public void setActived(boolean actived) {
+		this.actived = actived;
+	}
 
 }

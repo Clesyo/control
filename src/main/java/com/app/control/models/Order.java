@@ -1,6 +1,7 @@
 package com.app.control.models;
 
 import java.sql.Timestamp;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.Column;
@@ -21,119 +22,124 @@ import org.springframework.data.annotation.LastModifiedDate;
 @Entity
 @Table(name = "orders")
 public class Order {
-    
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
-    private Timestamp dateTime;
-    private char status;
-    @Column(nullable = true)
-    private String observation;
-    @Column(columnDefinition = "double(3,1) default 0.00")
-    private double delivery;
-    private double total;
-    @ManyToOne
-    @JoinColumn(name = "payment_id")
-    private Payment payment;
-    @OneToOne
-    @JoinColumn(name = "contact_id")
-    private Contact contact;
-    @ManyToOne
-    @JoinColumn(name = "company_id")
-    private Company company;
-    @ManyToMany
-    @JoinTable(
-        name = "order_item",
-        joinColumns = @JoinColumn(name = "order_id"),
-        inverseJoinColumns = @JoinColumn(name = "product_id")
-    )
-    private Set<Product> products;
 
-    @CreatedDate
-    @Column(name = "created_at", updatable = false, nullable = false)
-    private Timestamp createdAt;
-    @LastModifiedDate
-    @Column(name = "updated_at", nullable = false)
-    private Timestamp updatedAt;
+	@Id
 
-    public long getId() {
-        return this.id;
-    }
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private long id;
 
-    public void setId(long id) {
-        this.id = id;
-    }
+	@Column(name = "horary", nullable = false)
+	private Timestamp dateTime;
 
-    public Timestamp getDateTime() {
-        return this.dateTime;
-    }
+	@Column(nullable = false, columnDefinition = "char(2) default 'PE'")
+	private char status;
+	private String observation;
 
-    public void setDateTime(Timestamp dateTime) {
-        this.dateTime = dateTime;
-    }
+	@Column(columnDefinition = "double(3,1) default 0.00")
+	private double delivery;
 
-    public char getStatus() {
-        return this.status;
-    }
+	@Column(nullable = false, columnDefinition = "double(3,1)")
+	private double total;
 
-    public void setStatus(char status) {
-        this.status = status;
-    }
+	@ManyToOne
+	@JoinColumn(name = "payment_id", nullable = false)
+	private Payment payment;
 
-    public String getObservation() {
-        return this.observation;
-    }
+	@ManyToOne
+	@JoinColumn(name = "contact_id")
+	private Contact contact;
 
-    public void setObservation(String observation) {
-        this.observation = observation;
-    }
+	@ManyToOne
+	@JoinColumn(name = "company_id", nullable = false)
+	private Company company;
 
-    public double getDelivery() {
-        return this.delivery;
-    }
+	@ManyToMany
+	@JoinTable(name = "order_item", joinColumns = @JoinColumn(name = "order_id"), inverseJoinColumns = @JoinColumn(name = "product_id"))
+	private List<Product> products;
 
-    public void setDelivery(double delivery) {
-        this.delivery = delivery;
-    }
+	@LastModifiedDate
+	@Column(name = "created_at", columnDefinition = "timestamp")
+	private Timestamp createdAt;
+	@CreatedDate
+	@Column(name = "updated_at", columnDefinition = "timestamp default CURRENT_TIMESTAMP")
+	private Timestamp updatedAt;
 
-    public double getTotal() {
-        return this.total;
-    }
+	public long getId() {
+		return this.id;
+	}
 
-    public void setTotal(double total) {
-        this.total = total;
-    }
+	public void setId(long id) {
+		this.id = id;
+	}
 
-    public Payment getPayment() {
-        return this.payment;
-    }
+	public Timestamp getDateTime() {
+		return this.dateTime;
+	}
 
-    public void setPayment(Payment payment) {
-        this.payment = payment;
-    }
+	public void setDateTime(Timestamp dateTime) {
+		this.dateTime = dateTime;
+	}
 
-    public Contact getContact() {
-        return this.contact;
-    }
+	public char getStatus() {
+		return this.status;
+	}
 
-    public void setContact(Contact contact) {
-        this.contact = contact;
-    }
+	public void setStatus(char status) {
+		this.status = status;
+	}
 
-    public Company getCompany() {
-        return this.company;
-    }
+	public String getObservation() {
+		return this.observation;
+	}
 
-    public void setCompany(Company company) {
-        this.company = company;
-    }
+	public void setObservation(String observation) {
+		this.observation = observation;
+	}
 
-    public Set<Product> getProducts() {
-        return this.products;
-    }
+	public double getDelivery() {
+		return this.delivery;
+	}
 
-    public void setProducts(Set<Product> products) {
-        this.products = products;
-    }
+	public void setDelivery(double delivery) {
+		this.delivery = delivery;
+	}
+
+	public double getTotal() {
+		return this.total;
+	}
+
+	public void setTotal(double total) {
+		this.total = total;
+	}
+
+	public Payment getPayment() {
+		return this.payment;
+	}
+
+	public void setPayment(Payment payment) {
+		this.payment = payment;
+	}
+
+	/*
+	 * public Contact getContact() { return this.contact; }
+	 * 
+	 * public void setContact(Contact contact) { this.contact = contact; }
+	 */
+
+	public Company getCompany() {
+		return this.company;
+	}
+
+	public void setCompany(Company company) {
+		this.company = company;
+	}
+
+	public List<Product> getProducts() {
+		return this.products;
+	}
+
+	public void setProducts(List<Product> products) {
+		this.products = products;
+	}
 
 }

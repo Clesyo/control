@@ -1,13 +1,16 @@
 package com.app.control.models;
 
 import java.sql.Timestamp;
+import java.util.List;
 import java.util.Set;
-import java.util.UUID;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -18,164 +21,175 @@ import org.springframework.data.annotation.LastModifiedDate;
 @Entity
 @Table(name = "companies")
 public class Company {
-    
-    @Id
-    @GeneratedValue(generator = "uuid")
-    @GenericGenerator(name = "uuid", strategy = "org.hibernate.id.UUIDGenerator")
-    @Column(name = "id", unique = true)
-    private UUID id;
-    private String name;
-    @Column(unique = true)
-    private String email;
-    @Column(unique = true)
-    private String identity;
-    private String telephone;
-    private String cellphone;
-    private String zipCode;
-    private String andress;
-    private int numberHouse;
-    @Column(nullable = true)
-    private String complement;
-    private String district;
-    private String city;
-    @Column(length = 2)
-    private char uf;
-    @OneToMany(mappedBy = "company")
-    private Set<Category> categories;
 
-    @OneToMany(mappedBy = "company")
-    private Set<Ingredient> ingredients;
-    @OneToMany(mappedBy = "company")
-    private Set<Product> products;
-    @OneToMany(mappedBy = "company")
-    private Set<Order> orders;
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private long id;
+	@Column(columnDefinition = "varchar(36)", unique = true, nullable = false)
+	private String token;
+	@Column(nullable = false)
+	private String name;
+	@Column(unique = true, nullable = false)
+	private String email;
+	@Column(unique = true, nullable = false)
+	private String identity;
+	private String telephone;
+	@Column(nullable = false)
+	private String cellphone;
+	@Column(nullable = false)
+	private String zipCode;
+	@Column(nullable = false)
+	private String andress;
+	@Column(nullable = false)
+	private int numberHouse;
+	private String complement;
+	@Column(nullable = false)
+	private String district;
+	@Column(nullable = false)
+	private String city;
+	@Column(nullable = false, columnDefinition = "char(2)")
+	private char uf;
 
-    @CreatedDate
-    @Column(name = "created_at", updatable = false, nullable = false)
-    private Timestamp createdAt;
-    @LastModifiedDate
-    @Column(name = "updated_at", nullable = false)
-    private Timestamp updatedAt;
+	@ManyToOne
+	@JoinColumn(name = "user_id", nullable = false)
+	private User user;
 
-    
-    public UUID getId() {
-        return this.id;
-    }
+	@OneToMany(mappedBy = "company")
+	private List<Category> categories;
 
-    public void setId(UUID id) {
-        this.id = id;
-    }
+	@OneToMany(mappedBy = "company")
+	private List<Ingredient> ingredients;
 
-    public String getName() {
-        return this.name;
-    }
+	@OneToMany(mappedBy = "company")
+	private List<Product> products;
 
-    public void setName(String name) {
-        this.name = name;
-    }
+	@OneToMany(mappedBy = "company")
+	private List<Order> orders;
+	
+	@OneToMany(mappedBy = "company")
+	private List<Combo> combos;
 
-    public String getEmail() {
-        return this.email;
-    }
+	@LastModifiedDate
+	@Column(name = "created_at", columnDefinition = "timestamp")
+	private Timestamp createdAt;
+	@CreatedDate
+	@Column(name = "updated_at", columnDefinition = "timestamp default CURRENT_TIMESTAMP")
+	private Timestamp updatedAt;
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
+	public long getId() {
+		return this.id;
+	}
 
-    public String getIdentity() {
-        return this.identity;
-    }
+	public void setId(long id) {
+		this.id = id;
+	}
 
-    public void setIdentity(String identity) {
-        this.identity = identity;
-    }
+	public String getName() {
+		return this.name;
+	}
 
-    public String getTelephone() {
-        return this.telephone;
-    }
+	public void setName(String name) {
+		this.name = name;
+	}
 
-    public void setTelephone(String telephone) {
-        this.telephone = telephone;
-    }
+	public String getEmail() {
+		return this.email;
+	}
 
-    public String getCellphone() {
-        return this.cellphone;
-    }
+	public void setEmail(String email) {
+		this.email = email;
+	}
 
-    public void setCellphone(String cellphone) {
-        this.cellphone = cellphone;
-    }
+	public String getIdentity() {
+		return this.identity;
+	}
 
-    public String getZipCode() {
-        return this.zipCode;
-    }
+	public void setIdentity(String identity) {
+		this.identity = identity;
+	}
 
-    public void setZipCode(String zipCode) {
-        this.zipCode = zipCode;
-    }
+	public String getTelephone() {
+		return this.telephone;
+	}
 
-    public String getAndress() {
-        return this.andress;
-    }
+	public void setTelephone(String telephone) {
+		this.telephone = telephone;
+	}
 
-    public void setAndress(String andress) {
-        this.andress = andress;
-    }
+	public String getCellphone() {
+		return this.cellphone;
+	}
 
-    public int getNumberHouse() {
-        return this.numberHouse;
-    }
+	public void setCellphone(String cellphone) {
+		this.cellphone = cellphone;
+	}
 
-    public void setNumberHouse(int numberHouse) {
-        this.numberHouse = numberHouse;
-    }
+	public String getZipCode() {
+		return this.zipCode;
+	}
 
-    public String getComplement() {
-        return this.complement;
-    }
+	public void setZipCode(String zipCode) {
+		this.zipCode = zipCode;
+	}
 
-    public void setComplement(String complement) {
-        this.complement = complement;
-    }
+	public String getAndress() {
+		return this.andress;
+	}
 
-    public String getDistrict() {
-        return this.district;
-    }
+	public void setAndress(String andress) {
+		this.andress = andress;
+	}
 
-    public void setDistrict(String district) {
-        this.district = district;
-    }
+	public int getNumberHouse() {
+		return this.numberHouse;
+	}
 
-    public String getCity() {
-        return this.city;
-    }
+	public void setNumberHouse(int numberHouse) {
+		this.numberHouse = numberHouse;
+	}
 
-    public void setCity(String city) {
-        this.city = city;
-    }
+	public String getComplement() {
+		return this.complement;
+	}
 
-    public char getUf() {
-        return this.uf;
-    }
+	public void setComplement(String complement) {
+		this.complement = complement;
+	}
 
-    public void setUf(char uf) {
-        this.uf = uf;
-    }
+	public String getDistrict() {
+		return this.district;
+	}
 
-    public Set<Category> getCategories() {
-        return this.categories;
-    }
+	public void setDistrict(String district) {
+		this.district = district;
+	}
 
-    public void setCategories(Set<Category> categories) {
-        this.categories = categories;
-    }
+	public String getCity() {
+		return this.city;
+	}
 
-    public Set<Ingredient> getIngredients() {
-        return this.ingredients;
-    }
+	public void setCity(String city) {
+		this.city = city;
+	}
 
-    public void setIngredients(Set<Ingredient> ingredients) {
-        this.ingredients = ingredients;
-    }
+	public char getUf() {
+		return this.uf;
+	}
+
+	public void setUf(char uf) {
+		this.uf = uf;
+	}
+
+	/*
+	 * public Set<Category> getCategories() { return this.categories; }
+	 * 
+	 * public void setCategories(Set<Category> categories) { this.categories =
+	 * categories; }
+	 * 
+	 * public Set<Ingredient> getIngredients() { return this.ingredients; }
+	 * 
+	 * public void setIngredients(Set<Ingredient> ingredients) { this.ingredients =
+	 * ingredients; }
+	 */
 
 }

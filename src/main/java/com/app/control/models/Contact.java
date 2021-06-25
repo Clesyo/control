@@ -1,15 +1,13 @@
 package com.app.control.models;
 
 import java.sql.Timestamp;
-import java.util.Set;
-
+import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import org.springframework.data.annotation.CreatedDate;
@@ -18,54 +16,61 @@ import org.springframework.data.annotation.LastModifiedDate;
 @Entity
 @Table(name = "contacts")
 public class Contact {
-    
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
-    private String name;
-    private String email;
-    @OneToMany(mappedBy = "contact")
-    private Set<Address> addresses;
-    @OneToOne(mappedBy = "contact")
-    private Order order;
 
-    @CreatedDate
-    @Column(name = "created_at", updatable = false, nullable = false)
-    private Timestamp createdAt;
-    @LastModifiedDate
-    @Column(name = "updated_at", nullable = false)
-    private Timestamp updatedAt;
+	@Id
 
-    public long getId() {
-        return this.id;
-    }
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private long id;
 
-    public void setId(long id) {
-        this.id = id;
-    }
+	@Column(nullable = false)
+	private String name;
 
-    public String getName() {
-        return this.name;
-    }
+	@Column(nullable = false, unique = true)
+	private String email;
 
-    public void setName(String name) {
-        this.name = name;
-    }
+	@OneToMany(mappedBy = "contact")
+	private List<Address> addresses;
 
-    public String getEmail() {
-        return this.email;
-    }
+	@OneToMany(mappedBy = "contact")
+	private List<Order> orders;
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
+	@LastModifiedDate
+	@Column(name = "created_at", columnDefinition = "timestamp")
+	private Timestamp createdAt;
+	@CreatedDate
+	@Column(name = "updated_at", columnDefinition = "timestamp default CURRENT_TIMESTAMP")
+	private Timestamp updatedAt;
 
-    public Set<Address> getAddresses() {
-        return this.addresses;
-    }
+	public long getId() {
+		return this.id;
+	}
 
-    public void setAddresses(Set<Address> addresses) {
-        this.addresses = addresses;
-    }
+	public void setId(long id) {
+		this.id = id;
+	}
+
+	public String getName() {
+		return this.name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getEmail() {
+		return this.email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public List<Address> getAddresses() {
+		return this.addresses;
+	}
+
+	public void setAddresses(List<Address> addresses) {
+		this.addresses = addresses;
+	}
 
 }

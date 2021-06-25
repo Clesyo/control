@@ -1,6 +1,7 @@
 package com.app.control.models;
 
 import java.sql.Timestamp;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -13,6 +14,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import org.springframework.data.annotation.CreatedDate;
@@ -21,140 +23,146 @@ import org.springframework.data.annotation.LastModifiedDate;
 @Entity
 @Table(name = "products")
 public class Product {
-    
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
-    private String name;
-    @Column(columnDefinition = "double(10,3)")
-    private double price;
-    @Column(nullable = true)
-    private String description;
-    @Column(columnDefinition = "char(1)", nullable = true)
-    private char size;
-    @Column(name = "portion_size", columnDefinition = "char(1) default 'P'", nullable = true)
-    private char portionSize;
-    @Column(columnDefinition = "tinyint(1) default 0")
-    private boolean menu;
-    @Column(columnDefinition = "char(1) default 'P'")
-    private char type;
-    @ManyToOne
-    @JoinColumn(name = "category_id")
-    private Category category;
-    @Column(nullable = true)
-    private String image;
-    @ManyToMany(mappedBy = "products")
-    private Set<Combo> combos;
-    @ManyToOne
-    @JoinColumn(name = "menu_id")
-    private Menu menuID; 
-    @ManyToOne
-    @JoinColumn(name = "company_id")
-    private Company company;
-    
-    @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(
-        name = "ingredient_product",
-        joinColumns = {@JoinColumn(name = "ingredient_id")},
-        inverseJoinColumns = {@JoinColumn(name = "product_id")}
-    )
-    private Set<Ingredient> ingredients;
-    @ManyToMany(mappedBy = "products")
-    private Set<Order> orders;
 
-    @CreatedDate
-    @Column(name = "created_at", updatable = false, nullable = false)
-    private Timestamp createdAt;
-    @LastModifiedDate
-    @Column(name = "updated_at", nullable = false)
-    private Timestamp updatedAt;
+	@Id
 
-    public long getId() {
-        return this.id;
-    }
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private long id;
 
-    public void setId(long id) {
-        this.id = id;
-    }
+	@Column(nullable = false)
+	private String name;
 
-    public String getName() {
-        return this.name;
-    }
+	@Column(columnDefinition = "double(10,3) default 0.00", nullable = false)
+	private double price;
+	private String description;
 
-    public void setName(String name) {
-        this.name = name;
-    }
+	@Column(columnDefinition = "char(1)")
+	private char size;
 
-    public double getPrice() {
-        return this.price;
-    }
+	@Column(name = "portion_size", columnDefinition = "char(1) default 'P'")
+	private char portionSize;
 
-    public void setPrice(double price) {
-        this.price = price;
-    }
+	@Column(name = "menu", columnDefinition = "tinyint(1) default 0")
+	private boolean menuOp;
 
-    public String getDescription() {
-        return this.description;
-    }
+	@Column(columnDefinition = "char(1) default 'P'")
+	private char type;
 
-    public void setDescription(String description) {
-        this.description = description;
-    }
+	@ManyToOne
+	@JoinColumn(name = "category_id", nullable = false)
+	private Category category;
 
-    public char getSize() {
-        return this.size;
-    }
+	private String image;
 
-    public void setSize(char size) {
-        this.size = size;
-    }
+	@ManyToOne
+	@JoinColumn(name = "company_id")
+	private Company company;
 
-    public char getPortionSize() {
-        return this.portionSize;
-    }
+	@ManyToMany(mappedBy = "products")
+	private List<Combo> combos;
 
-    public void setPortionSize(char portionSize) {
-        this.portionSize = portionSize;
-    }
+	@OneToMany(mappedBy = "product")
+	private List<Menu> menus;
 
-    public boolean isMenu() {
-        return this.menu;
-    }
+	@ManyToMany
+	@JoinTable(name = "ingredient_product", joinColumns = {
+			@JoinColumn(name = "ingredient_id") }, inverseJoinColumns = { @JoinColumn(name = "product_id") })
+	private List<Ingredient> ingredients;
 
-    public void setMenu(boolean menu) {
-        this.menu = menu;
-    }
+	@ManyToMany(mappedBy = "products")
+	private List<Order> orders;
 
-    public char getType() {
-        return this.type;
-    }
+	@LastModifiedDate
+	@Column(name = "created_at", columnDefinition = "timestamp")
+	private Timestamp createdAt;
+	@CreatedDate
+	@Column(name = "updated_at", columnDefinition = "timestamp default CURRENT_TIMESTAMP")
+	private Timestamp updatedAt;
 
-    public void setType(char type) {
-        this.type = type;
-    }
+	public long getId() {
+		return this.id;
+	}
 
-    public Category getCategory() {
-        return this.category;
-    }
+	public void setId(long id) {
+		this.id = id;
+	}
 
-    public void setCategory(Category category) {
-        this.category = category;
-    }
+	public String getName() {
+		return this.name;
+	}
 
-    public String getImage() {
-        return this.image;
-    }
+	public void setName(String name) {
+		this.name = name;
+	}
 
-    public void setImage(String image) {
-        this.image = image;
-    }
+	public double getPrice() {
+		return this.price;
+	}
 
-    public Set<Combo> getCombo() {
-        return this.combos;
-    }
+	public void setPrice(double price) {
+		this.price = price;
+	}
 
-    public void setCombo(Set<Combo> combos) {
-        this.combos = combos;
-    }
+	public String getDescription() {
+		return this.description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public char getSize() {
+		return this.size;
+	}
+
+	public void setSize(char size) {
+		this.size = size;
+	}
+
+	public char getPortionSize() {
+		return this.portionSize;
+	}
+
+	public void setPortionSize(char portionSize) {
+		this.portionSize = portionSize;
+	}
+
+	public boolean isMenu() {
+		return this.menuOp;
+	}
+
+	public void setMenu(boolean menuOp) {
+		this.menuOp = menuOp;
+	}
+
+	public char getType() {
+		return this.type;
+	}
+
+	public void setType(char type) {
+		this.type = type;
+	}
+
+	public Category getCategory() {
+		return this.category;
+	}
+
+	public void setCategory(Category category) {
+		this.category = category;
+	}
+
+	public String getImage() {
+		return this.image;
+	}
+
+	public void setImage(String image) {
+		this.image = image;
+	}
+
+	/*
+	 * public Set<Combo> getCombo() { return this.combos; }
+	 * 
+	 * public void setCombo(Set<Combo> combos) { this.combos = combos; }
+	 */
 
 }

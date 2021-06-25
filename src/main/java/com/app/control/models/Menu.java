@@ -19,98 +19,116 @@ import org.springframework.data.annotation.LastModifiedDate;
 @Entity
 @Table(name = "menus")
 public class Menu {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
-    @ManyToOne
-    @JoinColumn(name = "category_id")
-    private Category category;
-    private boolean typeA;
-    private boolean typeB;
-    private boolean typeD;
-    private boolean typeE;
-    private boolean typeP;
-    private double price;
-    @OneToMany(mappedBy = "menu")
-    private Set<Product> products;
 
-    @CreatedDate
-    @Column(name = "created_at", updatable = false, nullable = false)
-    private Timestamp createdAt;
-    @LastModifiedDate
-    @Column(name = "updated_at", nullable = false)
-    private Timestamp updatedAt;
+	@Id
 
-    public long getId() {
-        return this.id;
-    }
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private long id;
 
-    public void setId(long id) {
-        this.id = id;
-    }
 
-    public Category getCategory() {
-        return this.category;
-    }
+	@Column(name = "type_a")
+	private boolean typeA;
 
-    public void setCategory(Category category) {
-        this.category = category;
-    }
+	@Column(name = "type_b")
+	private boolean typeB;
 
-    public boolean isTypeA() {
-        return this.typeA;
-    }
+	@Column(name = "type_d")
+	private boolean typeD;
 
-    public void setTypeA(boolean typeA) {
-        this.typeA = typeA;
-    }
+	@Column(name = "type_e")
+	private boolean typeE;
 
-    public boolean isTypeB() {
-        return this.typeB;
-    }
+	@Column(name = "type_p")
+	private boolean typeP;
 
-    public void setTypeB(boolean typeB) {
-        this.typeB = typeB;
-    }
+	@Column(nullable = false)
+	private double price;
+	
+	@ManyToOne
+	@JoinColumn(name = "category_id", nullable = false)
+	private Category category;
 
-    public boolean isTypeD() {
-        return this.typeD;
-    }
+	@ManyToOne
+	@JoinColumn(name = "product_id", nullable = false)
+	private Product product;
 
-    public void setTypeD(boolean typeD) {
-        this.typeD = typeD;
-    }
+	@LastModifiedDate
+	@Column(name = "created_at", columnDefinition = "timestamp")
+	private Timestamp createdAt;
+	@CreatedDate
+	@Column(name = "updated_at", columnDefinition = "timestamp default CURRENT_TIMESTAMP")
+	private Timestamp updatedAt;
 
-    public boolean isTypeE() {
-        return this.typeE;
-    }
+	public long getId() {
+		return this.id;
+	}
 
-    public void setTypeE(boolean typeE) {
-        this.typeE = typeE;
-    }
+	public void setId(long id) {
+		this.id = id;
+	}
 
-    public boolean isTypeP() {
-        return this.typeP;
-    }
+	public Category getCategory() {
+		return this.category;
+	}
 
-    public void setTypeP(boolean typeP) {
-        this.typeP = typeP;
-    }
+	public void setCategory(Category category) {
+		this.category = category;
+	}
 
-    public double getPrice() {
-        return this.price;
-    }
+	public boolean isTypeA() {
+		return this.typeA;
+	}
 
-    public void setPrice(double price) {
-        this.price = price;
-    }
+	public void setTypeA(boolean typeA) {
+		this.typeA = typeA;
+	}
 
-    public Set<Product> getProduct() {
-        return this.products;
-    }
+	public boolean isTypeB() {
+		return this.typeB;
+	}
 
-    public void setProduct(Set<Product> products) {
-        this.products = products;
-    }
+	public void setTypeB(boolean typeB) {
+		this.typeB = typeB;
+	}
+
+	public boolean isTypeD() {
+		return this.typeD;
+	}
+
+	public void setTypeD(boolean typeD) {
+		this.typeD = typeD;
+	}
+
+	public boolean isTypeE() {
+		return this.typeE;
+	}
+
+	public void setTypeE(boolean typeE) {
+		this.typeE = typeE;
+	}
+
+	public boolean isTypeP() {
+		return this.typeP;
+	}
+
+	public void setTypeP(boolean typeP) {
+		this.typeP = typeP;
+	}
+
+	public double getPrice() {
+		return this.price;
+	}
+
+	public void setPrice(double price) {
+		this.price = price;
+	}
+
+	public Product getProduct() {
+		return product;
+	}
+
+	public void setProduct(Product product) {
+		this.product = product;
+	}
 
 }

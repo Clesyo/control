@@ -1,6 +1,7 @@
 package com.app.control.models;
 
 import java.sql.Timestamp;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.Column;
@@ -19,63 +20,68 @@ import org.springframework.data.annotation.LastModifiedDate;
 @Entity
 @Table(name = "categories")
 public class Category {
-    
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
-    private String name;
-    private long parent;
-    @ManyToOne
-    @JoinColumn(name = "company_id", nullable = false)
-    private Company company;
-    @OneToMany(mappedBy = "category")
-    private Set<Product> products;
 
-    @CreatedDate
-    @Column(name = "created_at", updatable = false, nullable = false)
-    private Timestamp createdAt;
-    @LastModifiedDate
-    @Column(name = "updated_at", nullable = false)
-    private Timestamp updatedAt;
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private long id;
 
-    public long getId() {
-        return this.id;
-    }
+	@Column(nullable = false)
+	private String name;
+	private long parent;
 
-    public void setId(long id) {
-        this.id = id;
-    }
+	@ManyToOne
+	@JoinColumn(name = "company_id", nullable = false)
+	private Company company;
 
-    public String getName() {
-        return this.name;
-    }
+	@OneToMany(mappedBy = "category")
+	private List<Product> products;
+	
+	@OneToMany(mappedBy = "category")
+	private List<Menu> menus;
 
-    public void setName(String name) {
-        this.name = name;
-    }
+	@LastModifiedDate
+	@Column(name = "created_at", columnDefinition = "timestamp")
+	private Timestamp createdAt;
+	@CreatedDate
+	@Column(name = "updated_at", columnDefinition = "timestamp default CURRENT_TIMESTAMP")
+	private Timestamp updatedAt;
 
-    public long getParent() {
-        return this.parent;
-    }
+	public long getId() {
+		return this.id;
+	}
 
-    public void setParent(long parent) {
-        this.parent = parent;
-    }
+	public void setId(long id) {
+		this.id = id;
+	}
 
-    public Company getCompany() {
-        return this.company;
-    }
+	public String getName() {
+		return this.name;
+	}
 
-    public void setCompany(Company company) {
-        this.company = company;
-    }
+	public void setName(String name) {
+		this.name = name;
+	}
 
-    public Set<Product> getProducts() {
-        return this.products;
-    }
+	public long getParent() {
+		return this.parent;
+	}
 
-    public void setProducts(Set<Product> products) {
-        this.products = products;
-    }
+	public void setParent(long parent) {
+		this.parent = parent;
+	}
+
+	public Company getCompany() {
+		return this.company;
+	}
+
+	public void setCompany(Company company) {
+		this.company = company;
+	}
+
+	/*
+	 * public Set<Product> getProducts() { return this.products; }
+	 * 
+	 * public void setProducts(Set<Product> products) { this.products = products; }
+	 */
 
 }

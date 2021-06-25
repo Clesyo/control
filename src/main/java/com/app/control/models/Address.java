@@ -17,104 +17,111 @@ import org.springframework.data.annotation.LastModifiedDate;
 @Entity
 @Table(name = "addresses")
 public class Address {
-    
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
-    private String zipCode;
-    private String andress;
-    @Column(name = "number_house")
-    private int numberHouse;
-    @Column(nullable = true)
-    private String complement;
-    private String district;
-    private String city;
-    private char uf;
-    @ManyToOne
-    @JoinColumn(name = "contact_id")
-    private Contact contact;
 
-    @CreatedDate
-    @Column(name = "created_at", updatable = false, nullable = false)
-    private Timestamp createdAt;
-    @LastModifiedDate
-    @Column(name = "updated_at", nullable = false)
-    private Timestamp updatedAt;
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private long id;
 
-    public long getId() {
-        return this.id;
-    }
+	@Column(nullable = false)
+	private String zipCode;
 
-    public void setId(long id) {
-        this.id = id;
-    }
+	@Column(nullable = false)
+	private String andress;
 
-    public String getZipCode() {
-        return this.zipCode;
-    }
+	@Column(name = "number_house", nullable = false)
+	private int numberHouse;
+	private String complement;
 
-    public void setZipCode(String zipCode) {
-        this.zipCode = zipCode;
-    }
+	@Column(nullable = false)
+	private String district;
 
-    public String getAndress() {
-        return this.andress;
-    }
+	@Column(nullable = false)
+	private String city;
 
-    public void setAndress(String andress) {
-        this.andress = andress;
-    }
+	@Column(nullable = false, columnDefinition = "char(2)")
+	private char uf;
 
-    public int getNumberHouse() {
-        return this.numberHouse;
-    }
+	@ManyToOne
+	@JoinColumn(name = "contact_id", nullable = false)
+	private Contact contact;
 
-    public void setNumberHouse(int numberHouse) {
-        this.numberHouse = numberHouse;
-    }
+	@LastModifiedDate
+	@Column(name = "created_at", columnDefinition = "timestamp")
+	private Timestamp createdAt;
+	@CreatedDate
+	@Column(name = "updated_at", columnDefinition = "timestamp default CURRENT_TIMESTAMP")
+	private Timestamp updatedAt;
 
-    public String getComplement() {
-        return this.complement;
-    }
+	public long getId() {
+		return this.id;
+	}
 
-    public void setComplement(String complement) {
-        this.complement = complement;
-    }
+	public void setId(long id) {
+		this.id = id;
+	}
 
-    public String getDistrict() {
-        return this.district;
-    }
+	public String getZipCode() {
+		return this.zipCode;
+	}
 
-    public void setDistrict(String district) {
-        this.district = district;
-    }
+	public void setZipCode(String zipCode) {
+		this.zipCode = zipCode;
+	}
 
-    public String getCity() {
-        return this.city;
-    }
+	public String getAndress() {
+		return this.andress;
+	}
 
-    public void setCity(String city) {
-        this.city = city;
-    }
+	public void setAndress(String andress) {
+		this.andress = andress;
+	}
 
-    public char getUf() {
-        return this.uf;
-    }
+	public int getNumberHouse() {
+		return this.numberHouse;
+	}
 
-    public void setUf(char uf) {
-        this.uf = uf;
-    }
+	public void setNumberHouse(int numberHouse) {
+		this.numberHouse = numberHouse;
+	}
 
-    
+	public String getComplement() {
+		return this.complement;
+	}
 
-   
+	public void setComplement(String complement) {
+		this.complement = complement;
+	}
 
-    public Contact getContact() {
-        return this.contact;
-    }
+	public String getDistrict() {
+		return this.district;
+	}
 
-    public void setContact(Contact contact) {
-        this.contact = contact;
-    }
+	public void setDistrict(String district) {
+		this.district = district;
+	}
+
+	public String getCity() {
+		return this.city;
+	}
+
+	public void setCity(String city) {
+		this.city = city;
+	}
+
+	public char getUf() {
+		return this.uf;
+	}
+
+	public void setUf(char uf) {
+		this.uf = uf;
+	}
+
+	public Contact getContact() {
+		return this.contact;
+	}
+
+	public void setContact(Contact contact) {
+		this.contact = contact;
+	}
 
 }
