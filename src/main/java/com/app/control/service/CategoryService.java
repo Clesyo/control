@@ -6,6 +6,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.app.control.api.exception.EntityNotExist;
 import com.app.control.models.Category;
 import com.app.control.repository.CategoryRepository;
 
@@ -24,7 +25,7 @@ public class CategoryService {
 	}
 
 	public Category findById(Long id) {
-		return categoryRepository.getById(id);
+		return findOrFail(id);
 	}
 
 	public Category create(Category category) {
@@ -32,15 +33,18 @@ public class CategoryService {
 	}
 
 	public Category update(Long id, Category category) {
-		Category aux = categoryRepository.getById(id);
+		Category aux = findOrFail(id);
 
 		BeanUtils.copyProperties(category, aux);
 		return categoryRepository.save(aux);
 	}
 
 	public void destroy(Long id) {
-		Category category = categoryRepository.getById(id);
+		Category category = findOrFail(id);
 		categoryRepository.delete(category);
 	}
 
+	private Category findOrFail(Long id) {
+		return categoryRepository.findById(id).orElseThrow(()-> new EntityNotExist(Category.class.getName()+" não encontrada."));
+	}
 }

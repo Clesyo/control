@@ -13,6 +13,8 @@ import javax.persistence.Table;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 @Entity
 @Table(name = "contacts")
 public class Contact {
@@ -28,9 +30,11 @@ public class Contact {
 	@Column(nullable = false, unique = true)
 	private String email;
 
+	@JsonIgnoreProperties
 	@OneToMany(mappedBy = "contact")
 	private List<Address> addresses;
 
+	@JsonIgnoreProperties
 	@OneToMany(mappedBy = "contact")
 	private List<Order> orders;
 

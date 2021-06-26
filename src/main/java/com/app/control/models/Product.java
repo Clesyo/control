@@ -20,6 +20,8 @@ import javax.persistence.Table;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 @Entity
 @Table(name = "products")
 public class Product {
@@ -61,6 +63,7 @@ public class Product {
 	@ManyToMany(mappedBy = "products")
 	private List<Combo> combos;
 
+	@JsonIgnoreProperties
 	@OneToMany(mappedBy = "product")
 	private List<Menu> menus;
 

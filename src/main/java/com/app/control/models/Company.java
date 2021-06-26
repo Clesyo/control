@@ -18,6 +18,8 @@ import org.hibernate.annotations.GenericGenerator;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 @Entity
 @Table(name = "companies")
 public class Company {
@@ -54,18 +56,23 @@ public class Company {
 	@JoinColumn(name = "user_id", nullable = false)
 	private User user;
 
+	@JsonIgnoreProperties
 	@OneToMany(mappedBy = "company")
 	private List<Category> categories;
 
+	@JsonIgnoreProperties
 	@OneToMany(mappedBy = "company")
 	private List<Ingredient> ingredients;
 
+	@JsonIgnoreProperties
 	@OneToMany(mappedBy = "company")
 	private List<Product> products;
 
+	@JsonIgnoreProperties
 	@OneToMany(mappedBy = "company")
 	private List<Order> orders;
 	
+	@JsonIgnoreProperties
 	@OneToMany(mappedBy = "company")
 	private List<Combo> combos;
 
