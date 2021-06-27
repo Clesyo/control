@@ -1,34 +1,59 @@
 package com.app.control.api.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
+import java.util.List;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.app.control.models.Product;
-import com.app.control.repository.ProductRepository;
+import com.app.control.service.ProductService;
 
-@Controller
+@RestController
+@RequestMapping(path = "/produto", produces = MediaType.APPLICATION_JSON_VALUE)
 public class ProductController {
-    
-/*
-	@Autowired
-	private ProductRepository pr;
-	
-	
-    @RequestMapping(value = "/produtos", method = RequestMethod.GET)
-    public String show() {
-        return "product/product_index";
-    }
 
-    @RequestMapping(value = "/produto/novo", method = RequestMethod.GET)
-    public String create() {
-        return "product/product_create";
-    }
-    @RequestMapping(value = "/produto/novo", method = RequestMethod.GET)
-    public String store(Product product) {
-    	pr.save(product);
-    	return "redirect:/produtos";
-    }
-    */
+	private ProductService productService;
+
+	public ProductController(ProductService productService) {
+		super();
+		this.productService = productService;
+	}
+
+	public List<Product> all() {
+		return productService.findAll();
+	}
+	
+	@GetMapping("/{id}")
+	public ResponseEntity<Product> findById(@PathVariable(name = "id")Long id ) {
+		return ResponseEntity.ok(productService.findById(id));
+	}
+	
+	@PostMapping
+	public ResponseEntity<Product> store(@RequestBody Product product) {
+		Product p =  productService.create(product);
+		return ResponseEntity.status(HttpStatus.CREATED).body(p);
+	}
+	
+	@PutMapping("/{id}")
+	public ResponseEntity<Product> edit(@PathVariable(name= "id") Long id,@RequestBody Product product) {
+		return ResponseEntity.ok(productService.update(id, product));
+	}
+	
+	
+	@DeleteMapping("/{id}")
+	@ResponseStatus(code = HttpStatus.NO_CONTENT)
+	public void delete(Long id) {
+	productService.destroy(id);
+	}
 }
