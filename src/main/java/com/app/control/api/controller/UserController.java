@@ -40,14 +40,14 @@ public class UserController {
 		return ResponseEntity.ok(userService.findById(id));
 	}
 	
-	@PostMapping
+	@PostMapping()
 	public ResponseEntity<User> store(@RequestBody User user ) {
 		User u = userService.create(user);
 		return ResponseEntity.status(HttpStatus.CREATED).body(u);
 	}
 	
 	@PutMapping("/{id}")
-	public ResponseEntity<User> edit(@PathVariable Long id, @RequestBody User user ) {
+	public ResponseEntity<User> edit(@PathVariable(name = "id") Long id, @RequestBody User user ) {
 		return ResponseEntity.ok(userService.update(id, user));
 	}
 	

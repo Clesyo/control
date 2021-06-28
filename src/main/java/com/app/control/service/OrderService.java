@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.app.control.api.exception.EntityNotExist;
 import com.app.control.models.Order;
+import com.app.control.models.Product;
 import com.app.control.repository.OrderRepository;
 
 @Service
@@ -28,8 +29,15 @@ public class OrderService {
 		return findOrFail(id);
 	}
 
-	public Order save(Order order) {
+	private Order create(Order order) {
 		return orderRepository.save(order);
+	}
+	
+	public Order createOrderWithItem(Order order, List<Product> products) {
+		Order o = create(order);
+		o.getProducts().addAll(products);
+		
+		return orderRepository.save(o);
 	}
 
 	public Order update(Long id, Order order) {

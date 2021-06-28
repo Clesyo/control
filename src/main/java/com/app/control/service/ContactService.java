@@ -31,12 +31,12 @@ public class ContactService {
 		return findOrFail(id);
 	}
 
-	public Contact save(Contact contac) {
+	public Contact create(Contact contac) {
 		return contactRepository.save(contac);
 	}
 	
-	public Contact saveWithAddress(Contact contact, List<Address> addresses) {
-		Contact c = save(contact);
+	public Contact createWithAddress(Contact contact, List<Address> addresses) {
+		Contact c = create(contact);
 		c.getAddresses().addAll(addresses);
 		return contactRepository.save(c);
 	}

@@ -42,12 +42,12 @@ public class ContactController {
 	
 	@PostMapping
 	public ResponseEntity<Contact> store(Contact contact) {
-		return ResponseEntity.status(HttpStatus.CREATED).body(contactService.save(contact));
+		return ResponseEntity.status(HttpStatus.CREATED).body(contactService.create(contact));
 	}
 	
 	@PostMapping("/endereco")
 	public ResponseEntity<Contact> storeWithAddress(Contact contact, List<Address> addresses) {
-		return ResponseEntity.status(HttpStatus.CREATED).body(contactService.saveWithAddress(contact,addresses));
+		return ResponseEntity.status(HttpStatus.CREATED).body(contactService.createWithAddress(contact,addresses));
 	}
 	
 	@PutMapping("/{id}")

@@ -12,10 +12,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.app.control.models.Ingredient;
 import com.app.control.models.Product;
 import com.app.control.service.ProductService;
 
@@ -30,6 +30,7 @@ public class ProductController {
 		this.productService = productService;
 	}
 
+	@GetMapping
 	public List<Product> all() {
 		return productService.findAll();
 	}
@@ -40,8 +41,8 @@ public class ProductController {
 	}
 	
 	@PostMapping
-	public ResponseEntity<Product> store(@RequestBody Product product) {
-		Product p =  productService.create(product);
+	public ResponseEntity<Product> store(@RequestBody Product product, List<Ingredient> ingredients) {
+		Product p =  productService.create(product, ingredients);
 		return ResponseEntity.status(HttpStatus.CREATED).body(p);
 	}
 	
@@ -49,7 +50,6 @@ public class ProductController {
 	public ResponseEntity<Product> edit(@PathVariable(name= "id") Long id,@RequestBody Product product) {
 		return ResponseEntity.ok(productService.update(id, product));
 	}
-	
 	
 	@DeleteMapping("/{id}")
 	@ResponseStatus(code = HttpStatus.NO_CONTENT)

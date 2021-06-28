@@ -34,7 +34,7 @@ public class UserService {
 
 	public User update(Long id, User user) {
 		User u = findOrFail(id);
-		BeanUtils.copyProperties(user, u);
+		BeanUtils.copyProperties(user, u, "id");
 		return userRepository.save(u);
 	}
 

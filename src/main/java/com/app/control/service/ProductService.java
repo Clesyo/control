@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.app.control.api.exception.EntityNotExist;
+import com.app.control.models.Ingredient;
 import com.app.control.models.Product;
 import com.app.control.repository.ProductRepository;
 
@@ -28,7 +29,10 @@ public class ProductService {
 		return findOrFail(id);
 	}
 
-	public Product create(Product product) {
+	public Product create(Product product, List<Ingredient> ingredients) {
+		if(!ingredients.isEmpty()) {
+			product.getIngredients().addAll(ingredients);
+		}
 		return productRepository.save(product);
 	}
 

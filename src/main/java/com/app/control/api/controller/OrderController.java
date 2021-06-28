@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.app.control.models.Order;
+import com.app.control.models.Product;
 import com.app.control.service.OrderService;
 
 @RestController
@@ -36,13 +37,13 @@ public class OrderController {
 	}
 	
 	@GetMapping("/{id}")
-	public ResponseEntity<Order> findById(Long id) {
+	public ResponseEntity<Order> findById(@PathVariable(name = "id") Long id) {
 		return ResponseEntity.ok(orderService.findById(id));
 	}
 	
 	@PostMapping
-	public ResponseEntity<Order> store(Order order) {
-		return ResponseEntity.status(HttpStatus.CREATED).body(orderService.save(order));
+	public ResponseEntity<Order> store(@RequestBody Order order,@RequestBody List<Product> products) {
+		return ResponseEntity.status(HttpStatus.CREATED).body(orderService.createOrderWithItem(order, products));
 	}
 	
 	@PutMapping("/{id}")

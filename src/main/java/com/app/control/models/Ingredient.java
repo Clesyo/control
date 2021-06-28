@@ -37,10 +37,10 @@ public class Ingredient {
 	private List<Product> products;
 
 	@LastModifiedDate
-	@Column(name = "created_at", columnDefinition = "timestamp")
+	@Column(name = "created_at", columnDefinition = "timestamp", nullable = true)
 	private Timestamp createdAt;
 	@CreatedDate
-	@Column(name = "updated_at", columnDefinition = "timestamp default CURRENT_TIMESTAMP")
+	@Column(name = "updated_at", nullable = true,columnDefinition = "timestamp default CURRENT_TIMESTAMP")
 	private Timestamp updatedAt;
 
 	public long getId() {

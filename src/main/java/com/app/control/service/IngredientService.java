@@ -45,6 +45,6 @@ public class IngredientService {
 	}
 	
 	private Ingredient findOrFail(Long id) {
-		return ingredientRepository.findById(id).orElseThrow(() -> new EntityNotExist(getClass().getName()+" não encontrada."));
+		return ingredientRepository.findById(id).orElseThrow(() -> new EntityNotExist("Ingrediente não encontrada."));
 	}
 }
