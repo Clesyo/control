@@ -21,23 +21,23 @@ public class CompanyService {
 	public List<Company> findAll() {
 		return companyRepository.findAll();
 	}
-	
+
 	public Company findById(Long id) {
 		return findOrFail(id);
 	}
-	
+
 	public Company create(Company company) {
 		return companyRepository.save(company);
 	}
-	
+
 	public Company update(Long id, Company company) {
 		Company c = findOrFail(id);
-		
-		BeanUtils.copyProperties(company, c);
-		
+
+		BeanUtils.copyProperties(company, c, "id");
+
 		return companyRepository.save(c);
 	}
-	
+
 	public void destroy(Long id) {
 		Company c = findOrFail(id);
 		companyRepository.delete(c);

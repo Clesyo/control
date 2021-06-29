@@ -20,6 +20,8 @@ import org.springframework.data.annotation.LastModifiedDate;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+import io.swagger.annotations.ApiModelProperty;
+
 @Entity
 @Table(name = "companies")
 public class Company {
@@ -33,6 +35,7 @@ public class Company {
 	private String name;
 	@Column(unique = true, nullable = false)
 	private String email;
+	@ApiModelProperty(value = "Numero de CNPJ")
 	@Column(unique = true, nullable = false)
 	private String identity;
 	private String telephone;

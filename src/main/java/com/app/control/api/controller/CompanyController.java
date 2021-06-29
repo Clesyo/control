@@ -39,12 +39,12 @@ public class CompanyController {
 	}
 
 	@GetMapping("/{id}")
-	public ResponseEntity<Company> findById(@PathVariable Long id) {
+	public ResponseEntity<Company> findById(@PathVariable(name="id") Long id) {
 		return ResponseEntity.ok(companyService.findById(id));
 	}
 
 	@PostMapping
-	public ResponseEntity<Company> store(Company company) {
+	public ResponseEntity<Company> store(@RequestBody Company company) {
 		Company c = companyService.create(company);
 		return ResponseEntity.status(HttpStatus.CREATED).body(c);
 	}
