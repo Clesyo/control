@@ -30,14 +30,14 @@ public class ApiFoxConfig {
 				.globalResponses(HttpMethod.GET, responses());
 	}
 
-	private ArrayList<Response> responses() {
-		return new ArrayList<Response>() {
-			{
-				add(new ResponseBuilder().code("500").description("500 message").build());
-				add(new ResponseBuilder().code("403").description("Forbidden!").build());
-				add(new ResponseBuilder().code("201").description("Resposta ok").build());
-			}
-		};
+	private List<Response> responses() {
+		
+		List<Response> responses = new ArrayList<Response>();
+		responses.add(new ResponseBuilder().code("500").description("500 message").build());
+		responses.add(new ResponseBuilder().code("403").description("Forbidden!").build());
+		responses.add(new ResponseBuilder().code("201").description("Resposta ok").build());
+		
+		return responses;
 	}
 
 }

@@ -19,6 +19,8 @@ import javax.persistence.Table;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
+import com.app.control.api.model.dto.UserDTO;
+
 @Entity
 @Table(name = "users")
 public class User {
@@ -58,12 +60,11 @@ public class User {
 		this.email = email;
 	}
 
-	public User(String name, String email, String password, List<Role> roles) {
+	public User(String name, String email, String password) {
 		// TODO Auto-generated constructor stub
 		this.name = name;
 		this.email = email;
 		this.password = password;
-//		this.roles.addAll(roles);
 	}
 
 	public User(User user) {
