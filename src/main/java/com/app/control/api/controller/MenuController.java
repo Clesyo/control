@@ -15,8 +15,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.app.control.models.Menu;
-import com.app.control.service.MenuService;
+import com.app.control.api.models.Menu;
+import com.app.control.api.service.MenuService;
 
 @RestController
 @RequestMapping(path = "/cardapio", produces = MediaType.APPLICATION_JSON_VALUE)
